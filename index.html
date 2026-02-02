@@ -31,7 +31,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="https://github.com/user-attachments/assets/2cfee8e1-3696-4d78-ba2c-437ee8eba33a">
     
-    <!-- Structured Data (JSON-LD) for Rich Results -->
+    <!-- Structured Data (JSON-LD) for Local Business & Organization -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -89,6 +89,7 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--brand-cream);
             color: var(--brand-dark);
+            overflow-x: hidden; /* Prevent horizontal scroll on mobile */
         }
 
         /* Color Utilities */
@@ -147,12 +148,19 @@
         /* Industry Tag */
         .industry-tag {
             background: rgba(255, 255, 255, 0.1);
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem; /* Smaller padding for mobile */
             border-radius: 999px;
             border: 1px solid rgba(255, 255, 255, 0.2);
             font-weight: 600;
+            font-size: 0.875rem; /* Smaller text for mobile */
             color: white;
             transition: all 0.2s;
+        }
+        @media (min-width: 768px) {
+            .industry-tag {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
         }
         .industry-tag:hover {
             background: var(--brand-gold);
@@ -266,6 +274,15 @@
             100% { box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.4); border-color: #C5A059; }
         }
 
+        /* Mobile Scrollbar for Menu */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
     </style>
 </head>
 <body class="antialiased selection:bg-[#C5A059] selection:text-white flex flex-col min-h-screen">
@@ -275,23 +292,24 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex justify-between h-24 items-center">
                 <!-- Brand -->
-                <a href="#" onclick="navigateTo('home')" class="flex-shrink-0 flex items-center gap-4 cursor-pointer">
+                <a href="#" onclick="navigateTo('home'); return false;" class="flex-shrink-0 flex items-center gap-4 cursor-pointer">
                     <div id="nav-logo-container" class="relative w-14 h-14 overflow-hidden rounded-full border-2 border-[#C5A059] bg-white flex items-center justify-center shadow-sm transition-all duration-500">
                         <img src="https://github.com/user-attachments/assets/2cfee8e1-3696-4d78-ba2c-437ee8eba33a" alt="Orgvein Logo" class="w-full h-full object-cover object-center scale-[1.25]">
                     </div>
                     <div class="flex flex-col justify-center">
                         <span class="text-xl font-extrabold tracking-tight text-brand-dark leading-none uppercase">ORG<span class="text-brand-gold">VEIN</span></span>
-                        <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500 mt-1">Organisation's Vein</span>
+                        <span class="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500 mt-1">Clarity · Structure · Flow</span>
                     </div>
                 </a>
                 
                 <!-- Desktop Links -->
                 <div class="hidden md:flex items-center gap-8">
-                    <button onclick="navigateTo('home')" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">Home</button>
-                    <button onclick="scrollToSection('about')" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">About</button>
-                    <button onclick="navigateTo('services')" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">Services</button>
-                    <button onclick="scrollToSection('methodology')" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">Process</button>
-                    <button onclick="scrollToSection('contact')" class="bg-brand-gold text-white px-6 py-3 rounded-full text-sm font-bold hover:bg-[#b08d4b] transition-all shadow-lg shadow-[#C5A059]/30">Consult Now</button>
+                    <a href="#home" onclick="navigateTo('home'); return false;" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">Home</a>
+                    <a href="#about" onclick="scrollToSection('about'); return false;" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">About</a>
+                    <a href="#services" onclick="navigateTo('services'); return false;" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">Services</a>
+                    <a href="#blog" onclick="navigateTo('blog'); return false;" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">Blog</a>
+                    <a href="#methodology" onclick="scrollToSection('methodology'); return false;" class="nav-item text-sm font-semibold text-slate-600 hover:text-brand-dark transition-colors">Process</a>
+                    <a href="#contact" onclick="scrollToSection('contact'); return false;" class="bg-brand-gold text-white px-6 py-3 rounded-full text-sm font-bold hover:bg-[#b08d4b] transition-all shadow-lg shadow-[#C5A059]/30">Consult Now</a>
                 </div>
 
                 <!-- Mobile Toggle -->
@@ -303,11 +321,12 @@
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full left-0 top-24 shadow-xl p-8 flex flex-col gap-6">
-            <button onclick="navigateTo('home'); toggleMenu()" class="text-lg font-bold text-brand-dark text-left">Home</button>
-            <button onclick="scrollToSection('about'); toggleMenu()" class="text-lg font-bold text-brand-dark text-left">About</button>
-            <button onclick="navigateTo('services'); toggleMenu()" class="text-lg font-bold text-brand-dark text-left">Services</button>
-            <button onclick="scrollToSection('methodology'); toggleMenu()" class="text-lg font-bold text-brand-dark text-left">Process</button>
-            <button onclick="scrollToSection('contact'); toggleMenu()" class="text-brand-gold font-bold text-lg text-left">Request Consultation</button>
+            <a href="#home" onclick="navigateTo('home'); toggleMenu(); return false;" class="text-lg font-bold text-brand-dark text-left block">Home</a>
+            <a href="#about" onclick="scrollToSection('about'); toggleMenu(); return false;" class="text-lg font-bold text-brand-dark text-left block">About</a>
+            <a href="#services" onclick="navigateTo('services'); toggleMenu(); return false;" class="text-lg font-bold text-brand-dark text-left block">Services</a>
+            <a href="#blog" onclick="navigateTo('blog'); toggleMenu(); return false;" class="text-lg font-bold text-brand-dark text-left block">Blog</a>
+            <a href="#methodology" onclick="scrollToSection('methodology'); toggleMenu(); return false;" class="text-lg font-bold text-brand-dark text-left block">Process</a>
+            <a href="#contact" onclick="scrollToSection('contact'); toggleMenu(); return false;" class="text-brand-gold font-bold text-lg text-left block">Request Consultation</a>
         </div>
     </nav>
 
@@ -323,33 +342,20 @@
                 <div class="hero-drop" id="heroDrop"></div>
                 <div class="impact-glow" id="impactGlow"></div>
                 
-                <!-- Background Veins SVG - Updated to match Logo Style -->
+                <!-- Background Veins SVG - Updated to match Logo Style with Perfect Connections -->
                 <svg class="vein-svg" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">
                     <!-- Left Main Trunk -->
-                    <path class="vein-path" d="M500,800 C490,720 460,600 380,450 C320,340 280,220 250,100" stroke-width="8" />
-                    
+                    <path class="vein-path" d="M500,800 Q 470,700 440,600 T 380,450 T 320,300 T 260,100" stroke-width="8" />
                     <!-- Right Main Trunk -->
-                    <path class="vein-path" d="M500,800 C510,720 540,600 620,450 C680,340 720,220 750,100" stroke-width="8" />
-
-                    <!-- Left Branches (Connected perfectly to trunk) -->
-                    <!-- Branching off around 460,600 -->
-                    <path class="vein-path" d="M460,600 C420,580 350,580 300,500" stroke-width="5" style="animation-delay: 0.4s" />
-                    <!-- Branching off around 380,450 -->
-                    <path class="vein-path" d="M380,450 C400,400 420,350 425,280" stroke-width="4" style="animation-delay: 0.6s" />
-                    <!-- Branching off around 320,340 -->
-                    <path class="vein-path" d="M320,340 C280,300 240,280 200,250" stroke-width="3" style="animation-delay: 0.7s" />
-                    <!-- Sub-branch from 300,500 -->
-                    <path class="vein-path" d="M300,500 C280,460 260,440 240,400" stroke-width="3" style="animation-delay: 0.8s" />
-
-                    <!-- Right Branches (Connected perfectly to trunk) -->
-                    <!-- Branching off around 540,600 -->
-                    <path class="vein-path" d="M540,600 C580,580 650,580 700,500" stroke-width="5" style="animation-delay: 0.4s" />
-                    <!-- Branching off around 620,450 -->
-                    <path class="vein-path" d="M620,450 C600,400 580,350 575,280" stroke-width="4" style="animation-delay: 0.6s" />
-                    <!-- Branching off around 680,340 -->
-                    <path class="vein-path" d="M680,340 C720,300 760,280 800,250" stroke-width="3" style="animation-delay: 0.7s" />
-                    <!-- Sub-branch from 700,500 -->
-                    <path class="vein-path" d="M700,500 C720,460 740,440 760,400" stroke-width="3" style="animation-delay: 0.8s" />
+                    <path class="vein-path" d="M500,800 Q 530,700 560,600 T 620,450 T 680,300 T 740,100" stroke-width="8" />
+                    <!-- Left Branches -->
+                    <path class="vein-path" d="M440,600 C 400,580 350,580 300,500" stroke-width="5" style="animation-delay: 0.4s" />
+                    <path class="vein-path" d="M380,450 C 400,400 420,350 425,280" stroke-width="4" style="animation-delay: 0.6s" />
+                    <path class="vein-path" d="M320,300 C 280,260 240,240 200,210" stroke-width="3" style="animation-delay: 0.7s" />
+                    <!-- Right Branches -->
+                    <path class="vein-path" d="M560,600 C 600,580 650,580 700,500" stroke-width="5" style="animation-delay: 0.4s" />
+                    <path class="vein-path" d="M620,450 C 600,400 580,350 575,280" stroke-width="4" style="animation-delay: 0.6s" />
+                    <path class="vein-path" d="M680,300 C 720,260 760,240 800,210" stroke-width="3" style="animation-delay: 0.7s" />
                 </svg>
 
                 <!-- Decorative Elements -->
@@ -539,6 +545,79 @@
                     </div>
                 </div>
             </section>
+        </div>
+
+        <!-- BLOG FULL PAGE VIEW (New) -->
+        <div id="view-blog" class="page-view">
+            <!-- Blog Header -->
+            <div class="bg-[#0F2A30] text-white pt-32 pb-20">
+                <div class="max-w-7xl mx-auto px-6 lg:px-8">
+                    <span class="text-brand-gold font-bold text-xs uppercase tracking-[0.4em] mb-4 block">Insights</span>
+                    <h1 class="text-5xl font-black mb-6">Orgvein Insights</h1>
+                    <p class="text-xl text-slate-300 max-w-2xl">Expert perspectives on business transformation, operational excellence, and organizational growth.</p>
+                </div>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="max-w-7xl mx-auto px-6 lg:px-8 py-24 bg-white">
+                <div class="grid md:grid-cols-3 gap-10">
+                    
+                    <!-- Blog Card 1 -->
+                    <div class="group cursor-pointer">
+                        <div class="overflow-hidden rounded-2xl mb-6 shadow-md border border-slate-100 h-64 bg-slate-100 relative">
+                            <!-- Placeholder for Blog Image 1 -->
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 font-bold bg-slate-200">
+                                <i data-lucide="bar-chart-2" class="w-12 h-12 opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-bold text-slate-400 mb-3 uppercase tracking-widest">
+                            <span class="text-brand-gold">Strategy</span>
+                            <span>•</span>
+                            <span>Oct 24, 2023</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-brand-dark mb-3 group-hover:text-brand-gold transition-colors leading-tight">Why Most SMEs Fail to Scale Beyond 5 Years</h3>
+                        <p class="text-slate-600 mb-4 line-clamp-3">Discover the structural bottlenecks that prevent sustainable growth and how the 7-D framework solves them.</p>
+                        <span class="text-brand-dark font-bold text-sm underline decoration-brand-gold decoration-2 underline-offset-4 group-hover:text-brand-gold transition-colors">Read Article</span>
+                    </div>
+
+                    <!-- Blog Card 2 -->
+                    <div class="group cursor-pointer">
+                        <div class="overflow-hidden rounded-2xl mb-6 shadow-md border border-slate-100 h-64 bg-slate-100 relative">
+                            <!-- Placeholder for Blog Image 2 -->
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 font-bold bg-slate-200">
+                                <i data-lucide="database" class="w-12 h-12 opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-bold text-slate-400 mb-3 uppercase tracking-widest">
+                            <span class="text-brand-gold">Technology</span>
+                            <span>•</span>
+                            <span>Nov 12, 2023</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-brand-dark mb-3 group-hover:text-brand-gold transition-colors leading-tight">ERP Implementation: The Backbone of Digital Transformation</h3>
+                        <p class="text-slate-600 mb-4 line-clamp-3">How modern ERP systems like Odoo streamline operations and provide real-time visibility for decision making.</p>
+                        <span class="text-brand-dark font-bold text-sm underline decoration-brand-gold decoration-2 underline-offset-4 group-hover:text-brand-gold transition-colors">Read Article</span>
+                    </div>
+
+                    <!-- Blog Card 3 -->
+                    <div class="group cursor-pointer">
+                        <div class="overflow-hidden rounded-2xl mb-6 shadow-md border border-slate-100 h-64 bg-slate-100 relative">
+                            <!-- Placeholder for Blog Image 3 -->
+                            <div class="absolute inset-0 flex items-center justify-center text-slate-400 font-bold bg-slate-200">
+                                <i data-lucide="users" class="w-12 h-12 opacity-50"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3 text-xs font-bold text-slate-400 mb-3 uppercase tracking-widest">
+                            <span class="text-brand-gold">Culture</span>
+                            <span>•</span>
+                            <span>Dec 05, 2023</span>
+                        </div>
+                        <h3 class="text-2xl font-black text-brand-dark mb-3 group-hover:text-brand-gold transition-colors leading-tight">Building a High-Performance Culture from Scratch</h3>
+                        <p class="text-slate-600 mb-4 line-clamp-3">Culture isn't just perks. It's about clarity, accountability, and aligned incentives. Here is how to build it.</p>
+                        <span class="text-brand-dark font-bold text-sm underline decoration-brand-gold decoration-2 underline-offset-4 group-hover:text-brand-gold transition-colors">Read Article</span>
+                    </div>
+
+                </div>
+            </div>
         </div>
 
         <!-- SERVICES FULL PAGE VIEW -->
@@ -934,7 +1013,7 @@
                         </div>
                         <div class="flex flex-col">
                             <span class="text-3xl font-extrabold text-white tracking-tight uppercase leading-none">ORG<span class="text-brand-gold">VEIN</span></span>
-                            <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-500 mt-2">Organisation's Vein</span>
+                            <span class="text-[10px] uppercase tracking-[0.3em] font-bold text-slate-500 mt-2">Clarity · Structure · Flow</span>
                         </div>
                     </div>
                     <p class="max-w-sm text-sm font-medium leading-relaxed">Orgvein is a multi-disciplinary business transformation company. We help organisations build skilled teams and scalable systems.</p>
@@ -945,6 +1024,7 @@
                         <li><button onclick="scrollToSection('about')" class="hover:text-brand-gold transition-colors text-left">About Us</button></li>
                         <li><button onclick="navigateTo('services')" class="hover:text-brand-gold transition-colors text-left">What We Do</button></li>
                         <li><button onclick="scrollToSection('methodology')" class="hover:text-brand-gold transition-colors text-left">Our Process</button></li>
+                        <li><button onclick="navigateTo('blog')" class="hover:text-brand-gold transition-colors text-left">Blog</button></li>
                     </ul>
                 </div>
                 <div>
